@@ -29,11 +29,14 @@ class FileLocationDialog(QMainWindow):
 
     def plotgraph(self, hour, temperature):
         
-            self.graphWidget.plot(hour, temperature)
-            
+            self.graphWidget.plot(hour, temperature,pen=pg.mkPen('r', width=3))
+            self.graphWidget.setLabel("bottom", "Time")
+            self.graphWidget.setTitle( "Values")
+            self.graphWidget.setLabel("left", "Points")
+            self.graphWidget.showGrid(x = True, y = True, alpha = 0.7)
     def loaddata(self,file_location):
         
-        M = np.loadtxt(file_location, skiprows=1)
+        M = np.loadtxt(file_location, skiprows=0)
         x = M[:,0]
         y = M[:,1]
         
