@@ -34,9 +34,11 @@ class FileLocationDialog(QMainWindow):
             self.graphWidget.setTitle( "Values")
             self.graphWidget.setLabel("left", "Points")
             self.graphWidget.showGrid(x = True, y = True, alpha = 0.7)
+            
+            
     def loaddata(self,file_location):
-        
-        M = np.loadtxt(file_location, skiprows=0)
+        M = np.array(readFilterLinesData(file_location), dtype = float) 
+      
         x = M[:,0]
         y = M[:,1]
         
@@ -59,7 +61,34 @@ class FileLocationDialog(QMainWindow):
 
         print(file_location)
 
-
+#%%
+def readFilterLinesData(filename):
+    with open(filename, "r") as fi:   
+        n = 1
+        S = []
+        while n >0:
+            s = fi.readline()
+            n =  len(s)
+            s = s.split()
+            
+            if arenumbers(s) == True:
+                S.append(s)
+                print(s)
+    return S
+    
+#%%
+def arenumbers(s):
+    if s == []:
+        return False
+    else:
+        for b in s:
+          try:
+              float(b)
+          except:
+              return False
+      
+        return True
+#%%
 app = QApplication([])
 
 ui = FileLocationDialog()
